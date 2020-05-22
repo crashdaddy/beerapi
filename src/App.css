@@ -59,13 +59,14 @@ body {
 }
 
 .likesCounter {
-  position: fixed;
   top:10px;
-  right:10px;
-  margin: 5px;
+  position: fixed;
+    left: 60%;
+    transform: translate(-50%, 0);
   border-radius: 10px;
   font-size: 24pt;
   font-family: montserratBold;
+  z-index: 2;
 }
 
 .beerDiv {
@@ -95,10 +96,9 @@ body {
   background: linear-gradient(to right, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
   -webkit-box-shadow: 5px 5px 15px 5px #000000; 
   box-shadow: 5px 5px 15px 5px #000000;
-  padding:4px;
   border-radius: 5px;
   z-index: -1;
-  padding: 60px 4px 4px 4px;
+  padding: 4px;
   min-height: 100%;
 }
 
@@ -124,13 +124,16 @@ body {
 background: -moz-linear-gradient(-45deg, #EC5B10 0%, #F17C21 52%, #F89209 100%);
 background: -webkit-linear-gradient(-45deg, #EC5B10 0%, #F17C21 52%, #F89209 100%);
 background: linear-gradient(135deg, #EC5B10 0%, #F17C21 52%, #F89209 100%);
+border-bottom: 1px solid black;
 }
 
 .bannerPic {
   max-width: 100px;
   margin: 4px;
   border: 1px solid black;
+  border-radius: 5px;
   float: left;
+  background: white;
 }
 .title {
   font-family: deutsche;
