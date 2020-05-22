@@ -25,7 +25,7 @@
 
 body {
   font-family: montserrat;
-  background-color:  lightblue;
+  background-color:  #fff897;
 }
 
 .App {
@@ -77,10 +77,7 @@ body {
   transform: skew(-4deg);
   border-radius: 10px;
   padding: 10px;
-  background: #1A60CE;
-  background: -moz-linear-gradient(left, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
-  background: -webkit-linear-gradient(left, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
-  background: linear-gradient(to right, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
+  background: #f6c101;
   -webkit-box-shadow: 5px 5px 15px 5px #000000; 
   box-shadow: 5px 5px 15px 5px #000000;
 }
@@ -90,10 +87,7 @@ body {
   position: fixed;
   top: 0px;
   right: 3px;
-  background: #1A60CE;
-  background: -moz-linear-gradient(left, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
-  background: -webkit-linear-gradient(left, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
-  background: linear-gradient(to right, #1A60CE 0%, #1F92E1 50%, #6088C5 100%);
+  background: #ec9d00;
   -webkit-box-shadow: 5px 5px 15px 5px #000000; 
   box-shadow: 5px 5px 15px 5px #000000;
   border-radius: 5px;
@@ -120,10 +114,7 @@ body {
   position: fixed;
   top: 0;
   z-index: 1;
-  background: #EC5B10;
-background: -moz-linear-gradient(-45deg, #EC5B10 0%, #F17C21 52%, #F89209 100%);
-background: -webkit-linear-gradient(-45deg, #EC5B10 0%, #F17C21 52%, #F89209 100%);
-background: linear-gradient(135deg, #EC5B10 0%, #F17C21 52%, #F89209 100%);
+  background: #fae96f;
 border-bottom: 1px solid black;
 }
 
