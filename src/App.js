@@ -33,11 +33,17 @@ class Nutrition extends Component {
 }
 
 class Facts extends Component {
+
    render() {
-     return (
+    if (!this.props.currentBeer.food_pairing) return null;    
+       return ( 
+      
       <div className="factsPanel">
         <h1>{this.props.currentBeer.name}</h1>
+        <p>{this.props.currentBeer.tagline}</p>
         <Nutrition beer={this.props.currentBeer} />
+        <p><u>Food Pairing</u></p>
+        {this.props.currentBeer.food_pairing.map((foodPairing,idx) => {return <div style={{marginLeft:'10px'}} key={idx}>{foodPairing}</div>})}
       </div>
 
      )
