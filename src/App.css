@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.likesCounter {
+  position: fixed;
+  top:10px;
+  right:10px;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 44pt;
+}
+
+.beerDiv {
+  width: 70%;
+  float: left;
+  margin: 10px auto 20px 40px;
+  border: 1px solid black;
+  transform: skew(-8deg);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.likeButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+}
