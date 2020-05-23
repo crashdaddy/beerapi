@@ -25,43 +25,13 @@
 
 body {
   font-family: montserrat;
-  background-color:  #fff897;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+  background-color:  #ffffff;
 }
 
 .likesCounter {
   top:10px;
   position: fixed;
-    left: 60%;
+    right: 3px;
     transform: translate(-50%, 0);
   border-radius: 10px;
   font-size: 24pt;
@@ -70,26 +40,26 @@ body {
 }
 
 .beerDiv {
-  width: 60%;
+  width: 15%;
+  height:150px;
   float: left;
-  margin: 10px auto 20px 40px;
-  border: 1px solid black;
-  transform: skew(-4deg);
+  margin: 10px auto 20px 20px;
+  transform: skew(-1deg);
   border-radius: 10px;
   padding: 10px;
-  background: #f6c101;
-  -webkit-box-shadow: 5px 5px 15px 5px #000000; 
-  box-shadow: 5px 5px 15px 5px #000000;
+  background: #ffffff;
+  -webkit-box-shadow: 2px 2px 5px 2px #000000; 
+  box-shadow: 2px 2px 5px 2px #000000;
 }
 
 .factsPanel {
   width: 29%;
   position: fixed;
-  top: 0px;
-  right: 3px;
-  background: #ec9d00;
-  -webkit-box-shadow: 5px 5px 15px 5px #000000; 
-  box-shadow: 5px 5px 15px 5px #000000;
+  top: 61px;
+  left: 3px;
+  background: #ffffff;
+  -webkit-box-shadow: 2px 2px 5px 2px #000000; 
+  box-shadow: 2px 2px 5px 2px #000000;
   border-radius: 5px;
   z-index: -1;
   padding: 4px;
@@ -104,32 +74,51 @@ body {
 }
 
 .outputDiv {
-  margin-top: 150px;
+  width:70%;
+  float: right;
+  margin-top: 60px;
 }
 
 .bannerDiv {
-  width: 70%;
+  width: 100%;
+  height:60px;
   float: left;
   margin: 0px auto 20px 0px;
   position: fixed;
   top: 0;
   z-index: 1;
-  background: #fae96f;
+  background: rgb(255,255,255,.9);
 border-bottom: 1px solid black;
 }
 
 .bannerPic {
-  max-width: 100px;
+  max-height: 50px;
   margin: 4px;
   border: 1px solid black;
   border-radius: 5px;
   float: left;
   background: white;
 }
+
+.bannerPicIntro {
+  max-width: 80%;
+  margin: 14px;
+  border: 1px solid black;
+  border-radius: 5px;
+  float: left;
+  background: white;
+}
+
 .title {
   font-family: deutsche;
-  font-size: 80pt;
-  line-height: 60pt;
+  font-size: 20pt;
+  line-height: 20pt;
+}
+
+.intro {
+  font-family: deutsche;
+  font-size: 40pt;
+  line-height: 40pt;
 }
 
 .tagline {

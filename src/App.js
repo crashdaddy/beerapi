@@ -5,7 +5,7 @@ import './App.css';
 function Header() {
   return (
     <div className="bannerDiv">
-      <img src={bierGirl} className="bannerPic"/>
+      <img src={bierGirl} alt="" className="bannerPic"/>
       <div className="title">Bier Bitte!</div>
       <div className="tagline">"One drink's not going to kill you..."</div>
     </div>
@@ -35,12 +35,18 @@ class Nutrition extends Component {
 class Facts extends Component {
 
    render() {
-    if (!this.props.currentBeer.food_pairing) return null;    
+    if (!this.props.currentBeer.food_pairing) return (
+      <div className="factsPanel">
+      <img src={bierGirl} alt= "" className="bannerPicIntro"/>
+      <div className="intro">Bier Bitte!</div>
+      <div className="tagline">"One drink's not going to kill you..."</div>
+      </div>
+    );    
        return ( 
       
       <div className="factsPanel">
         <h1>{this.props.currentBeer.name}</h1>
-        <p>{this.props.currentBeer.tagline}</p>
+        <p style={{fontSize:'10pt'}}>{this.props.currentBeer.description}</p>
         <Nutrition beer={this.props.currentBeer} />
         <p><u>Food Pairing</u></p>
         {this.props.currentBeer.food_pairing.map((foodPairing,idx) => {return <div style={{marginLeft:'10px'}} key={idx}>{foodPairing}</div>})}
@@ -73,9 +79,9 @@ class Beer extends Component {
   render() {
   return (
     <div className="beerDiv" onClick={this.changeBeer}>
-    <div><h1>{this.props.beer.name}</h1></div>
-    <img src={this.props.beer.image_url} alt={this.props.beer.name} style={{width: '30px', float: 'left',paddingRight: '10px'}}/>
-    {this.props.beer.description}
+    <div><span style={{fontSize: '1vw'}}>{this.props.beer.name}</span></div>
+    <img src={this.props.beer.image_url} alt="" style={{width: '30px', float: 'left',paddingRight: '10px',paddingBottom: '10px'}}/>
+    <p style={{fontSize:'10pt'}}>{this.props.beer.tagline}</p>
     <button className="likeButton" onClick={this.likedToggle}>{this.state.liked ? "Liked" : "like"}</button>
     </div>
   )
