@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import bierGirl from './img/bierGirl.png'; // with import
+import bierEmpty from './img/beerEmpty.png';
+import bierFull from './img/beerFull.png';
 import './App.css';
 
 function Header() {
@@ -17,7 +19,7 @@ class Likes extends Component {
  
   render(){
     return (
-      <div className="likesCounter">Liked: {this.props.value}</div>
+      <div className="likesCounter"><img src={bierFull} style={{width:'30px'}}/>  {this.props.value}</div>
     )
     }
 }
@@ -82,7 +84,11 @@ class Beer extends Component {
     <div><span style={{fontSize: '1vw'}}>{this.props.beer.name}</span></div>
     <img src={this.props.beer.image_url} alt="" style={{width: '30px', float: 'left',paddingRight: '10px',paddingBottom: '10px'}}/>
     <p style={{fontSize:'10pt'}}>{this.props.beer.tagline}</p>
-    <button className="likeButton" onClick={this.likedToggle}>{this.state.liked ? "Liked" : "like"}</button>
+    {this.state.liked ? 
+    <img src={bierFull} style={{width:'30px',position: 'absolute',bottom: '3px',right: '3px'}} onClick={this.likedToggle}/>
+    :
+    <img src={bierEmpty} style={{width:'30px',position: 'absolute',bottom: '3px',right: '3px'}} onClick={this.likedToggle}/>
+  }
     </div>
   )
 }
