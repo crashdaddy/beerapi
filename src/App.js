@@ -96,7 +96,7 @@ class Nutrition extends Component {
         <div style={{fontFamily: "franklinGothic", fontHeight: '40px',textAlign: 'center'}}><h1>Alcohol Facts</h1></div>
         <div>
         <ul>
-          <li>ABV: {this.props.beer.abv}</li>
+          <li>ABV: {this.props.beer.abv}%</li>
           <li>IBU: {this.props.beer.ibu}</li>
           <li>EBC: {this.props.beer.ebc}</li>
           <li>SRM: {this.props.beer.srm}</li>
