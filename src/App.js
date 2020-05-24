@@ -5,6 +5,8 @@ import bierFull from './img/beerFull.png';
 import drunk1 from './img/drunk1.png';
 import drunk2 from './img/drunk2.png';
 import drunk3 from './img/drunk3.png';
+import closeButton from './img/redX.png';
+
 import './App.css';
 
 class Header extends Component {
@@ -15,9 +17,39 @@ class Header extends Component {
       <div className="title">Bier Bitte!</div>
       <div className="tagline">"One drink's not going to kill you..."</div>
       <ABV abvLevel={this.props.abvLevel} changeABV={this.props.changeABV}/>
-      <Likes value={this.props.likes}/>
+      <LikesCounter value={this.props.likes} togglePopup={this.props.togglePopup}/>
     </div>
   )
+  }
+}
+
+class LikedCollection extends Component {
+
+  state = { showing: true };
+
+  hidePanel = () => {
+    this.setState({
+      showing:false
+    })
+  }
+
+  render() {
+      const showing  = this.state.showing;
+      console.log(showing);
+      return (
+          <div className="windowPane" style={{display : showing===true ? 'inline' : 'none' }}>
+                    <div id="closeButton" style={{position: 'absolute',top:'5px',right:'5px'}}>
+                    <img src={closeButton} alt="" style={{width:'30px'}} onClick={this.hidePanel} />
+                    </div>
+            <fieldset>
+              <legend>My Favorite Biers!</legend>
+              { showing 
+                  ? this.props.likedBeersCollection.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} likeAll = "true" changeBeer={this.props.changeBeer} updateLikes={this.props.updatelikes} />))
+                  : null
+              }
+            </fieldset>
+          </div>  
+      )
   }
 }
 
@@ -40,19 +72,19 @@ class ABV extends Component {
   render() {
     return (
       <div className="abvLevels" style={{display:'inline-block'}}>
-        <img onClick={() => this.changeABV(1)} src={drunk1} style={{width:'30px',marginRight: '20px'}} />
-        <img onClick={() => this.changeABV(2)} src={drunk2} style={{width:'30px',marginRight: '20px'}} />
-        <img onClick={() => this.changeABV(3)} src={drunk3} style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(1)} src={drunk1} alt="" style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(2)} src={drunk2} alt="" style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(3)} src={drunk3} alt="" style={{width:'30px',marginRight: '20px'}} />
       </div>
     )
   }
 }
 
-class Likes extends Component {
+class LikesCounter extends Component {
  
   render(){
     return (
-      <div className="likesCounter"><img src={bierFull} style={{width:'30px'}}/>  {this.props.value}</div>
+      <div className="likesCounter"><img src={bierFull} alt="" style={{width:'30px'}} onClick={this.props.togglePopup}/>  {this.props.value}</div>
     )
     }
 }
@@ -101,10 +133,12 @@ class Beer extends Component {
   }
 
   likedToggle = () => {
+    if(this.props.likeAll===undefined){
     this.setState ({
       liked : !this.state.liked
     })
-    this.props.updateLikes(this.state.liked)
+    this.props.updateLikes(this.state.liked,this.props.beer)
+  }
   }
 
   changeBeer = () => {
@@ -132,16 +166,17 @@ class Beer extends Component {
           backgroundColor: "#ff0303"
         }
       }
-      
+      let showAll = this.props.likeAll;
+      if (showAll===undefined) {showAll=this.state.liked}
   return (
      <div className="beerDiv" style={AbvStyle} onClick={this.changeBeer}>
     <div><span style={{fontSize: '1vw'}}>{this.props.beer.name}</span></div>
     <img src={this.props.beer.image_url} alt="" style={{width: '30px', float: 'left',paddingRight: '10px',paddingBottom: '10px'}}/>
     <p style={{fontSize:'10pt'}}>{this.props.beer.tagline}</p>
-    {this.state.liked ? 
-    <img src={bierFull} style={{width:'30px',position: 'absolute',bottom: '3px',right: '3px'}} onClick={this.likedToggle}/>
+    {showAll ? 
+    <img src={bierFull} alt="" style={{width:'30px',position: 'absolute',bottom: '3px',right: '3px'}} onClick={this.likedToggle}/>
     :
-    <img src={bierEmpty} style={{width:'30px',position: 'absolute',bottom: '3px',right: '3px'}} onClick={this.likedToggle}/>
+    <img src={bierEmpty} alt="" style={{width:'30px',position: 'absolute',bottom: '3px',right: '3px'}} onClick={this.likedToggle}/>
   }
     </div>
   )
@@ -156,12 +191,21 @@ class App extends Component {
     // class-based Components allow us to have "state"! And this is why/when we use class-based components.
     this.state = {
         beers: [],
+        likedBeers: [],
+        showPopup: false,
         abvLevel : 1,
         currentBeer: {},
         page: 1,
         likes : 0
     }
   }
+
+  togglePopup = () => {  
+    this.setState({  
+         showPopup: !this.state.showPopup  
+    });  
+    
+  }  
 
   changeBeer = (newBeer) => {
       this.setState({currentBeer: newBeer})
@@ -171,16 +215,27 @@ class App extends Component {
     this.setState({abvLevel:newLevel})
   }
 
-  updatelikes = (liked) => {
+  updatelikes = (liked, likedBeer) => {
     let currentLikes = this.state.likes;
     if (liked===true) { 
-      currentLikes--;
-      this.setState({likes: currentLikes}) 
-      } else {
+    currentLikes--;
+    let beersLiked = this.state.likedBeers; // make a separate copy of the array
+    let index = beersLiked.indexOf(likedBeer)
+    if (index !== -1) {
+      beersLiked.splice(index, 1);
+      this.setState({likedBeers: beersLiked});
+    }
+    this.setState({likes: currentLikes}) 
+    } else {
     currentLikes++;
+    let beersLiked = this.state.likedBeers;
+    beersLiked.push(likedBeer)
+    this.setState({likedBeer:beersLiked});
     this.setState({likes: currentLikes});
   }
+  console.log(this.state.likedBeers);
 }
+
 
   componentDidMount = () => {
     window.addEventListener('scroll', this.infiniteScroll);
@@ -224,13 +279,15 @@ render() {
 
     return (
       <div>
-      <Header likes={this.state.likes} abvLevel={this.state.abvLevel} changeABV={this.changeABV}/>
+      <Header likes={this.state.likes} abvLevel={this.state.abvLevel} changeABV={this.changeABV} togglePopup={this.togglePopup}/>
       <div className="outputDiv">
-     {this.state.beers.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
+     {this.state.beers.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
      
      </div>
 
      <Facts currentBeer={this.state.currentBeer}/>
+
+     {this.state.showPopup  ? <LikedCollection likedBeersCollection={this.state.likedBeers} changeBeer={this.changeBeer} likedBeers={this.state.likedBeers} updateLikes={this.updatelikes}/> : null} 
      </div>
     );
   }

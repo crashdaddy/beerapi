@@ -138,3 +138,22 @@ border-bottom: 1px solid black;
   margin-left: auto;
   margin-right: auto;
 }
+
+.windowPane {
+  /* background: rgb(18,130,236);
+  background: linear-gradient(333deg, rgba(18,130,236,1) 3%, rgba(44,144,223,1) 49%, rgba(88,140,187,1) 91%);     -webkit-box-shadow: 5px 5px 15px 5px #000000;  */
+  background-color: #f9f9f9;
+  position:absolute;
+  left:50%;
+  top:120px;
+  width:90%;
+  margin: 0 auto;
+  transform: translate(-50%);
+  text-align: center;
+  position: absolute;
+  padding: 20px; 
+  border-radius: 5px;
+  -webkit-box-shadow: 5px 5px 15px 5px #000000; 
+  box-shadow: 5px 5px 15px 5px #000000;
+  clear: both;
+}
