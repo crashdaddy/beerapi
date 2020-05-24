@@ -2,17 +2,50 @@ import React, {Component} from 'react';
 import bierGirl from './img/bierGirl.png'; // with import
 import bierEmpty from './img/beerEmpty.png';
 import bierFull from './img/beerFull.png';
+import drunk1 from './img/drunk1.png';
+import drunk2 from './img/drunk2.png';
+import drunk3 from './img/drunk3.png';
 import './App.css';
 
-function Header() {
+class Header extends Component {
+  render(){
   return (
     <div className="bannerDiv">
       <img src={bierGirl} alt="" className="bannerPic"/>
       <div className="title">Bier Bitte!</div>
       <div className="tagline">"One drink's not going to kill you..."</div>
+      <ABV abvLevel={this.props.abvLevel} changeABV={this.props.changeABV}/>
+      <Likes value={this.props.likes}/>
     </div>
-
   )
+  }
+}
+
+class ABV extends Component {
+  constructor(props) {
+    super (props);
+
+    this.state ={
+      abvLevel: 1
+    }
+  }
+
+  changeABV = (level) => {
+    this.setState ({
+      abvLevel : level
+    })
+    this.props.changeABV(level);
+  }
+
+  render() {
+    return (
+      <div className="abvLevels" style={{display:'inline-block'}}>
+        <img onClick={() => this.changeABV(1)} src={drunk1} style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(2)} src={drunk2} style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(3)} src={drunk3} style={{width:'30px',marginRight: '20px'}} />
+      </div>
+    )
+  }
 }
 
 class Likes extends Component {
@@ -79,8 +112,29 @@ class Beer extends Component {
   }
   
   render() {
+    let abvTarget = this.props.abvLevel;
+    let bierABV = this.props.beer.abv;
+    let AbvStyle= {
+      backgroundColor: "#ffffff"
+      }
+      if(abvTarget===1&& bierABV <2)
+      AbvStyle = {
+        backgroundColor: "#7abff5"
+        }
+
+      if(abvTarget===2 && bierABV > 2 && bierABV < 8) {
+        AbvStyle = {
+        backgroundColor: "#faee37"
+        }
+      }
+      if(abvTarget===3 && bierABV > 8){
+        AbvStyle = {
+          backgroundColor: "#ff0303"
+        }
+      }
+      
   return (
-    <div className="beerDiv" onClick={this.changeBeer}>
+     <div className="beerDiv" style={AbvStyle} onClick={this.changeBeer}>
     <div><span style={{fontSize: '1vw'}}>{this.props.beer.name}</span></div>
     <img src={this.props.beer.image_url} alt="" style={{width: '30px', float: 'left',paddingRight: '10px',paddingBottom: '10px'}}/>
     <p style={{fontSize:'10pt'}}>{this.props.beer.tagline}</p>
@@ -102,6 +156,7 @@ class App extends Component {
     // class-based Components allow us to have "state"! And this is why/when we use class-based components.
     this.state = {
         beers: [],
+        abvLevel : 1,
         currentBeer: {},
         page: 1,
         likes : 0
@@ -110,6 +165,10 @@ class App extends Component {
 
   changeBeer = (newBeer) => {
       this.setState({currentBeer: newBeer})
+  }
+
+  changeABV = (newLevel) => {
+    this.setState({abvLevel:newLevel})
   }
 
   updatelikes = (liked) => {
@@ -165,11 +224,12 @@ render() {
 
     return (
       <div>
-      <Header/>
+      <Header likes={this.state.likes} abvLevel={this.state.abvLevel} changeABV={this.changeABV}/>
       <div className="outputDiv">
-     {this.state.beers.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
+     {this.state.beers.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
+     
      </div>
-     <Likes value={this.state.likes} />
+
      <Facts currentBeer={this.state.currentBeer}/>
      </div>
     );

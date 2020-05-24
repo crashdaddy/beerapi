@@ -39,6 +39,12 @@ body {
   z-index: 2;
 }
 
+.abvLevels {
+  position: absolute;
+  right: 110px;
+  top:18px;
+}
+
 .beerDiv {
   width: 15%;
   height:150px;
@@ -47,7 +53,6 @@ body {
   transform: skew(-1deg);
   border-radius: 10px;
   padding: 10px;
-  background: #ffffff;
   -webkit-box-shadow: 2px 2px 5px 2px #000000; 
   box-shadow: 2px 2px 5px 2px #000000;
 }
