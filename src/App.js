@@ -125,6 +125,7 @@ class Facts extends Component {
       <img src={bierGirl} alt= "" className="bannerPicIntro"/>
       <div className="intro">Bier Bitte!</div>
       <div className="tagline">"One drink's not going to kill you..."</div>
+      <p><span style={{fontSize:'10pt'}}>Data Provided by: <a href="https://www.punkapi.com/" target="blank">PunkAPI</a></span></p>
       </div>
     );    
        return ( 
@@ -138,6 +139,7 @@ class Facts extends Component {
         <BrewingMethod beer={this.props.currentBeer} />
         <FoodPairing beer={this.props.currentBeer}/>
         <BrewersTip beer={this.props.currentBeer}/>
+        <p><span style={{fontSize:'10pt'}}>Data Provided by: <a href="https://www.punkapi.com/" target="blank">PunkAPI</a></span></p>
       </div>
      )
    }
@@ -146,7 +148,7 @@ class Facts extends Component {
 class BrewersTip extends Component {
   render() {
     return (
-      <div>
+      <div style={{marginBottom:'20px'}}>
          <p><u>Brewer's Tips:</u></p>
       {this.props.beer.brewers_tips}
       <p>Contributed By: <b>{this.props.beer.contributed_by}</b></p>
