@@ -31,11 +31,11 @@ class LikedCollection extends Component {
     this.setState({
       showing:false
     })
+    this.props.togglePopup()
   }
 
   render() {
       const showing  = this.state.showing;
-      console.log(showing);
       return (
           <div className="windowPane" style={{display : showing===true ? 'inline' : 'none' }}>
                     <div id="closeButton" style={{position: 'absolute',top:'5px',right:'5px'}}>
@@ -72,9 +72,9 @@ class ABV extends Component {
   render() {
     return (
       <div className="abvLevels" style={{display:'inline-block'}}>
-        <img onClick={() => this.changeABV(1)} src={drunk1} alt="" style={{width:'30px',marginRight: '20px'}} />
-        <img onClick={() => this.changeABV(2)} src={drunk2} alt="" style={{width:'30px',marginRight: '20px'}} />
-        <img onClick={() => this.changeABV(3)} src={drunk3} alt="" style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(1)} src={drunk1} alt="" title="Beers with ABV < 2%" style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(2)} src={drunk2} alt="" title="Beers with ABV > 2% and < 8%" style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(3)} src={drunk3} alt="" title="Beers with ABV >= 8%" style={{width:'30px',marginRight: '20px'}} />
       </div>
     )
   }
@@ -165,11 +165,11 @@ class Ingredients extends Component {
       <p><u>Ingredients</u></p>
       Malt:
       <ul>
-      {this.props.beer.ingredients.malt.map((maltIng,idx)=> {return <li><b>{maltIng.name}</b>:<span style={{fontSize:'10pt'}}> {maltIng.amount.value} {maltIng.amount.unit}</span> </li>})}
+      {this.props.beer.ingredients.malt.map((maltIng,idx)=> {return <li key={maltIng.name+idx}><b>{maltIng.name}</b>:<span style={{fontSize:'10pt'}}> {maltIng.amount.value} {maltIng.amount.unit}</span> </li>})}
       </ul>
       Hops:
       <ul>
-      {this.props.beer.ingredients.hops.map((hopsIng,idx)=> {return <li><b>{hopsIng.name}</b>:<span style={{fontSize:'10pt'}}>  {hopsIng.amount.value} {hopsIng.amount.unit} (add at: {hopsIng.add} attribute: {hopsIng.attribute})</span> </li>})}
+      {this.props.beer.ingredients.hops.map((hopsIng,idx)=> {return <li key={hopsIng.name+idx}><b>{hopsIng.name}</b>:<span style={{fontSize:'10pt'}}>  {hopsIng.amount.value} {hopsIng.amount.unit} (add at: {hopsIng.add} attribute: {hopsIng.attribute})</span> </li>})}
       </ul>
       Yeast:
       <ul>
@@ -193,11 +193,11 @@ class BrewingMethod extends Component {
         </ul>
         Fermentation:
         <ul>
-          <li>{this.props.beer.method.fermentation.temp.value}° {this.props.beer.method.fermentation.temp.unit}</li>
+          <li key={new Date().getTime()}>{this.props.beer.method.fermentation.temp.value}° {this.props.beer.method.fermentation.temp.unit}</li>
         </ul>
         Twist:
         <ul>
-          <li>{this.props.beer.method.twist}</li>
+          <li  key={this.props.beer.id}>{this.props.beer.method.twist}</li>
         </ul>   
         </div>
       </div>
@@ -332,7 +332,6 @@ class App extends Component {
     this.setState({likedBeer:beersLiked});
     this.setState({likes: currentLikes});
   }
-  console.log(this.state.likedBeers);
 }
 
 
@@ -386,7 +385,7 @@ render() {
 
      <Facts currentBeer={this.state.currentBeer}/>
 
-     {this.state.showPopup  ? <LikedCollection likedBeersCollection={this.state.likedBeers} changeBeer={this.changeBeer} likedBeers={this.state.likedBeers} updateLikes={this.updatelikes}/> : null} 
+     {this.state.showPopup  ? <LikedCollection likedBeersCollection={this.state.likedBeers} changeBeer={this.changeBeer} likedBeers={this.state.likedBeers} togglePopup={this.togglePopup} updateLikes={this.updatelikes}/> : null} 
      </div>
     );
   }
