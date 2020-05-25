@@ -72,9 +72,9 @@ class ABV extends Component {
   render() {
     return (
       <div className="abvLevels" style={{display:'inline-block'}}>
-        <img onClick={() => this.changeABV(1)} src={drunk1} alt="" title="Beers with ABV < 2%" style={{width:'30px',marginRight: '20px'}} />
-        <img onClick={() => this.changeABV(2)} src={drunk2} alt="" title="Beers with ABV > 2% and < 8%" style={{width:'30px',marginRight: '20px'}} />
-        <img onClick={() => this.changeABV(3)} src={drunk3} alt="" title="Beers with ABV >= 8%" style={{width:'30px',marginRight: '20px'}} />
+        <img onClick={() => this.changeABV(1)} src={drunk1} alt="" title="Beers with ABV < 2%" style={{width:'30px',marginRight: '20px',backgroundColor:'#7abff5'}} />
+        <img onClick={() => this.changeABV(2)} src={drunk2} alt="" title="Beers with ABV > 2% and < 8%" style={{width:'30px',marginRight: '20px',backgroundColor:'#faee37'}} />
+        <img onClick={() => this.changeABV(3)} src={drunk3} alt="" title="Beers with ABV >= 8%" style={{width:'30px',marginRight: '20px',backgroundColor:'#ff0303'}} />
       </div>
     )
   }
@@ -245,22 +245,21 @@ class Beer extends Component {
   }
   
   render() {
-    let abvTarget = this.props.abvLevel;
     let bierABV = this.props.beer.abv;
     let AbvStyle= {
       backgroundColor: "#ffffff"
       }
-      if(abvTarget===1&& bierABV <2)
+      if(bierABV <2)
       AbvStyle = {
         backgroundColor: "#7abff5"
         }
 
-      if(abvTarget===2 && bierABV > 2 && bierABV < 8) {
+      if(bierABV > 2 && bierABV < 8) {
         AbvStyle = {
         backgroundColor: "#faee37"
         }
       }
-      if(abvTarget===3 && bierABV > 8){
+      if(bierABV >= 8){
         AbvStyle = {
           backgroundColor: "#ff0303"
         }
@@ -372,14 +371,51 @@ infiniteScroll = () => {
       })
     })
   }
+
+  compareValues(key, order = 'asc') {
+    return function innerSort(a, b) {
+      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        return 0;
+      }
+  
+      const varA = (typeof a[key] === 'string')
+        ? a[key].toUpperCase() : a[key];
+      const varB = (typeof b[key] === 'string')
+        ? b[key].toUpperCase() : b[key];
+  
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return (
+        (order === 'desc') ? (comparison * -1) : comparison
+      );
+    };
+  }
+  
  
 render() {
+
+  const newArray = this.state.beers;
+  
+  if(this.state.abvLevel===3) {
+    newArray.sort(this.compareValues('abv', 'desc'));
+  }
+  if(this.state.abvLevel===2) {
+    newArray.sort(this.compareValues('abv', 'asc'));
+  }
+  if(this.state.abvLevel===1) {
+    newArray.sort(this.compareValues("name",'asc'));
+  }
+  
 
     return (
       <div>
       <Header likes={this.state.likes} abvLevel={this.state.abvLevel} changeABV={this.changeABV} togglePopup={this.togglePopup}/>
       <div className="outputDiv">
-     {this.state.beers.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
+     {newArray.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
      
      </div>
 
