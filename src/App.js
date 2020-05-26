@@ -243,10 +243,10 @@ class Beer extends Component {
 
   changeBeer = () => {
     this.setState({
-      selected: this.props.beerID
+      selected: this.props.beer.name
     })
     
-    this.props.changeBeer(this.props.beer, this.props.beerID);
+    this.props.changeBeer(this.props.beer, this.props.beer.name);
   }
   
   render() {
@@ -429,7 +429,7 @@ render() {
       <div>
       <Header likes={this.state.likes} abvLevel={this.state.abvLevel} changeABV={this.changeABV} togglePopup={this.togglePopup}/>
       <div className="outputDiv">
-     {newArray.map((beerdata,idx) => (<Beer key={idx} beerID={idx} beer={beerdata} selected={idx===this.state.selectedBeerId} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
+     {newArray.map((beerdata,idx) => (<Beer key={idx} beerID={idx} beer={beerdata} selected={beerdata.name===this.state.selectedBeerId} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
      
      </div>
 
