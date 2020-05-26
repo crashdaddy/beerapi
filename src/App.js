@@ -227,6 +227,7 @@ class Beer extends Component {
     super (props);
 
     this.state ={
+      selected : false,
       liked: false
     }
   }
@@ -241,33 +242,44 @@ class Beer extends Component {
   }
 
   changeBeer = () => {
-    this.props.changeBeer(this.props.beer);
+    this.setState({
+      selected: this.props.beerID
+    })
+    
+    this.props.changeBeer(this.props.beer, this.props.beerID);
   }
   
   render() {
     let bierABV = this.props.beer.abv;
-    let AbvStyle= {
-      backgroundColor: "#ffffff"
-      }
+    let opacityText = '1';
+    let borderText = "2px solid white";
+    if (this.props.selected) {borderText='2px solid blue';opacityText='.7';}
+    let AbvStyle= {}
       if(bierABV <2)
       AbvStyle = {
-        backgroundColor: "#7abff5"
+        backgroundColor: "#7abff5",
+        opacity: opacityText,
+        border: borderText
         }
 
       if(bierABV > 2 && bierABV < 8) {
         AbvStyle = {
-        backgroundColor: "#faee37"
+        backgroundColor: "#faee37",
+        opacity: opacityText,
+        border: borderText
         }
       }
       if(bierABV >= 8){
         AbvStyle = {
-          backgroundColor: "#ff0303"
+          backgroundColor: "#ff0303",
+          opacity: opacityText,
+          border: borderText
         }
       }
       let showAll = this.props.likeAll;
       if (showAll===undefined) {showAll=this.state.liked}
   return (
-     <div className="beerDiv" style={AbvStyle} onClick={this.changeBeer}>
+     <div className="beerDiv"  style={AbvStyle} onClick={this.changeBeer}>
     <div><span style={{fontSize: '1vw'}}>{this.props.beer.name}</span></div>
     <img src={this.props.beer.image_url} alt="" style={{width: '30px', float: 'left',paddingRight: '10px',paddingBottom: '10px'}}/>
     <p style={{fontSize:'10pt'}}>{this.props.beer.tagline}</p>
@@ -290,6 +302,7 @@ class App extends Component {
     this.state = {
         beers: [],
         likedBeers: [],
+        selectedBeerId: '',
         showPopup: false,
         abvLevel : 1,
         currentBeer: {},
@@ -305,8 +318,9 @@ class App extends Component {
     
   }  
 
-  changeBeer = (newBeer) => {
-      this.setState({currentBeer: newBeer})
+  changeBeer = (newBeer,selectedBeer) => {
+      this.setState({currentBeer: newBeer});
+      this.setState({selectedBeerId: selectedBeer})
   }
 
   changeABV = (newLevel) => {
@@ -415,7 +429,7 @@ render() {
       <div>
       <Header likes={this.state.likes} abvLevel={this.state.abvLevel} changeABV={this.changeABV} togglePopup={this.togglePopup}/>
       <div className="outputDiv">
-     {newArray.map((beerdata,idx) => (<Beer key={idx} beer={beerdata} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
+     {newArray.map((beerdata,idx) => (<Beer key={idx} beerID={idx} beer={beerdata} selected={idx===this.state.selectedBeerId} abvLevel={this.state.abvLevel} likedBeers={this.state.likedBeers} changeBeer={this.changeBeer} updateLikes={this.updatelikes} />))}
      
      </div>
 
