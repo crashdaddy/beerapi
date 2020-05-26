@@ -57,6 +57,13 @@ body {
   box-shadow: 2px 2px 5px 2px #00000070;
 }
 
+.smiley {
+  width:30px;
+  margin-right: 20px;
+  -webkit-box-shadow: 2px 2px 2px 2px #00000050; 
+  box-shadow: 2px 2px 2px 2px #00000050;
+}
+
 .factsPanel {
   width: 29%;
   position: fixed;
